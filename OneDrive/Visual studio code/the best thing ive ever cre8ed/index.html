@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="web3.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/eaa69239cc.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <nav id="danav">
+        <button onclick="metamagic()" class="wb hov" id="metamask">Connect Wallet</button>
+        <a href="index.html">Token Creator</a>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+    <script src="main.js"></script>
+    <div id="message" class="msg green" style="margin-top: 500px;">
+        <button id="xbut"  style="border: 0px;">x</button>
+        <p id="mesbod"></p>
+    </div>
+
+    <div id="dadiv">
+        <p id="text4div" style="font-size: 16px;"></p>
+    </div>
+
+    <div id="maindiv">
+        <h3 style="color: #ffffff; margin-left: 10px;" id="stepindicator">Step 1</h3>
+        <center>
+        <h1 style="font-size: 60px; color: #ffffff;" id="th1">It all starts with <button onclick="metamagic()" class="wb hov" id="cn2">Connect Wallet</button></h1>
+        <h1 style="color: #ffffff; display: none;" id="st2a1">Initial Supply</h1>
+        <h2 style="display: none; color: #ffffff" id="st2a2">specify how many tokens will initially be sent to your address</h2>
+        <br style="display: none;" id="st2a3"><br style="display: none;" id="st2a4">
+        <input type="number" style="display: none;" placeholder="Initial Supply"  id="st2a5">
+        <br style="display: none;" id="st2a6"><br style="display: none;" id="st2a7">
+        <button class="wb hov" style="display: none;" id="st2a8" onclick="no3()">Next Step</button>
+
+        <h1 style="color: #ffffff; display: none;" id="st3a1">Name & Symbol</h1>
+        <h2 style="display: none; color: #ffffff" id="st3a2">How your token will be recognized</h2>
+        <br style="display: none;" id="st3a3">
+        <input type="text" placeholder="Name"  style="display: none;" id="st3a4">
+        <br style="display: none;" id="st3a5">
+        <input type="text" style="display: none;" placeholder="Symbol"  id="st3a6">
+        <br style="display: none;" id="st3a7">
+        <button class="wb hov" style="display: none;" id="st3a8" onclick="no4()">Next Step</button>
+
+        <h1 style="color: #ffffff; display: none;" id="st4a1">Features</h1>
+        <h2 style="display: none; color: #ffffff" id="st4a2">What else will your token be able to do <i>(except for being a gem in the blockchain)</i></h2>
+        <br style="display: none;" id="st4a3">
+        <div id="divndiv">
+            <h4 class="inline" style="display: none; color: #ffffff" id="st4a4">Mintable </h4><p class="inline" style="display: none; color: #ffffff" id="st4a5">allows you to mint additional tokens <i> <span class="gray">cost: </span> <span class="green">Free</span></i></p><input type="checkbox" class="inline" style="display: none;" id="st4a6"><br id="st4a7">
+            <h4 class="inline" style="display: none; color: #ffffff" id="st4a8">Burnable </h4><p class="inline" style="display: none; color: #ffffff" id="st4a9">allows you to burn tokens<i> <span class="gray">cost: </span> <span class="green">Free</span></i></p><input type="checkbox" class="inline" style="display: none;" id="st4a10"><br id="st4a11">
+            <h4 class="inline" style="display: none; color: #ffffff" id="st4a12">Taxable </h4><p class="inline" style="display: none; color: #ffffff" id="st4a13">allows you to collect tax from transfers<i> <span class="gray">cost: </span> <span class="red">0.01 ether</span></i></p><input type="checkbox" class="inline" style="display: none;" id="st4a14"><br id="st4a15">
+            <h4 class="inline" style="display: none; color: #ffffff" id="st4a16">Stakeable </h4><p class="inline" style="display: none; color: #ffffff" id="st4a17">allows people to steak tokens<i> <span class="gray">cost: </span> <span class="red">0.05 ether</span></i></p><input type="checkbox" class="inline" style="display: none;" id="st4a18"><br id="st4a19">
+        </div>
+        <button class="wb hov" style="display: none; width: 400px;" id="st4a20" onclick="finish()">Create Token (Free + gas)</button>
+
+        <h1 style="color: #ffffff; display: none;" id="st5a1">Token Created!</h1>
+        <h3 style="color: #ffffff; display: none;" id="st5a2"></h3>
+        <h4 style="color: #ffffff; display: none;" id="st5a3"><i>Click "Import Token" in your wallet and use the address above to view your token</i></h4>
+        <a href="#" style="color: #ffffff; display: none; margin-bottom: 20px;" id="st5a5" target="_blank">View Contract</a>
+        <button class="wb hov" style="display: none; " id="st5a4" onclick="gotit()">Got It</button>
+        </center>
+        <p style="color: #ffffff; display: none;"><i></i></p>
+        <h1 id="ERROR"></h1>
+    </div>
+</body>
+</html>

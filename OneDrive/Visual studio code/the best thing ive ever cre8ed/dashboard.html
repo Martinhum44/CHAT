@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>token dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/eaa69239cc.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <nav id="danav">
+        <button onclick="m2()" class="wb hov" id="metamask">Connect Wallet</button>
+        <a href="index.html">Token Creator</a>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+    <main id="mn">
+        <center>
+        <h1 id="a" style="font-size: 60px; color: white;">It all starts with</h1>
+        <button onclick="m2()" class="wb hov" id="mm2">Connect Wallet</button>
+
+        <h1 style="display: none; font-size: 60px; color: white;" id="b">Select Your Token</h1>
+        <div id="maindiv" style="display: none">
+
+        </div>
+
+        <div id="daStuff">
+            <h1 id="header" style="font-weight: bold;"></h1>
+            <h3 id="total" style="font-weight: bold"></h3>
+            <h3 id="total2" style="font-weight: bold"></h3>
+            <h1 id="pageIndicator"></h1>
+            <input id="amounts" placeholder="" style="display: none;" type="number"> 
+            <input id="mint2" placeholder="mint to" style="display: none;">
+            <input id="time" placeholder="time" style="display: none;" type="number"> 
+            <input id="limit" placeholder="limit" style="display: none;">
+            <button class="wb hov" id="omgmintinnowcys" style="display: none;" onclick="mint()"></button>
+
+            <div id="warning" style="position: fixed; width: 300px; height: 100px; background-color: greenyellow; color:black; top:10px; left: 40%; display: none; border-radius: 10px;">
+                <button style='border:0px;background-color:greenyellow;margin-left: 270px;' onclick="destroy('warning')">x</button><br>
+                txt
+            </div>
+            <h3 id="notice"></h3>
+            <div id="pools"></div>
+        </div>
+        </center>
+    </main>
+    <aside style="display:none; position: absolute; top: 100px; padding-left: auto; padding-right: auto;" id="aside" class="left white-side">
+        <button onclick="mintPage()">Mint</button>
+        <button onclick="burnPage()">Burn</button>
+        <button onclick="taxPage()">Update Tax Info</button>
+        <button onclick="stakePage()">Manage Staking pool</button>
+        <button onclick="updateFeatures()">Update Features</button>
+        <button onclick="home()">Main Page</button>
+    </aside>
+    <script src="m2.js"></script>
+</body>
+</html> 
