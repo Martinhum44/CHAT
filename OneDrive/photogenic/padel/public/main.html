@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Lato:wght@100;300;400;700;900&family=Open+Sans:wght@300;400;600;700&family=Platypi:wght@300;400;700&family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+        integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            background-color: rgb(251, 251, 251);
+        }
+
+        .card {
+            background-color: rgb(227, 227, 227);
+            width: 500px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            padding: 10px
+        }
+
+        #this-card {
+            padding: 15px;
+            height: 200px;
+        }
+
+        #search-container {
+            border-radius: 8px;
+        }
+
+        input[type=text],
+        .inputlike {
+            width: 300px;
+            border: none;
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            height: 50px;
+            margin: 0;
+            border-radius: 10px 0px 0px 10px;
+            font-size: 20px;
+            border-radius: 10px;
+            font-size: 30px;
+            display: inline
+        }
+
+        textarea {
+            width: 300px;
+            border: none;
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            height: 50px;
+            margin: 0;
+            border-radius: 10px;
+            font-size: 12px;
+            resize: none;
+        }
+
+        button {
+            width: 100px;
+            border: none;
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            background-color: rgb(69, 43, 187);
+            color: white;
+            height: 50px;
+            margin: 0;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        @keyframes fwhoom {
+            from {
+                transform: scale(1);
+                box-shadow: 2px 2px 20px gray;
+            }
+
+            to {
+                transform: scale(1.2);
+                box-shadow: 2px 2px 20px rgb(41, 41, 41);
+            }
+        }
+
+        @keyframes moohwf {
+            from {
+                transform: scale(1.05);
+                box-shadow: 2px 2px 20px rgb(41, 41, 41);
+            }
+
+            to {
+                transform: scale(1);
+                box-shadow: 2px 2px 20px gray;
+            }
+        }
+
+        .hovered {
+            animation-name: fwhoom;
+            animation-duration: 0.1s;
+            animation-timing-function: linear;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .novered {
+            animation-name: moohwf;
+            animation-duration: 0.1s;
+            animation-timing-function: linear;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        td[colspan="2"] button {
+            border-radius: 10px;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        #table input,
+        #table button {
+            border-radius: 10px;
+            margin: 2px;
+        }
+
+        select {
+            height: 30px;
+            width: 60px;
+            background-color: rgb(216, 216, 216);
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .biggy {
+            border-radius: 10px;
+            height: 150px;
+            width: 300px;
+            font-size: 20px;
+        }
+
+        #starter>div {
+            height: 180px;
+            width: 40%;
+            font-size: 30px;
+            margin-top: 50px;
+        }
+
+        .black {
+            background-color: black;
+        }
+
+        .ghost {
+            height: 50%;
+        }
+
+        .minibutton {
+            height: 30px;
+            border-radius: 3px;
+            width: 70px;
+            color: rgb(193, 193, 255);
+        }
+
+
+        table {
+            width: 100%;
+            border: none;
+        }
+
+        tr,
+        td {
+            border: none;
+        }
+
+        nav h1,
+        nav li {
+            float: left;
+        }
+
+        nav ul {
+            margin-left: 85%;
+        }
+
+        nav li {
+            list-style-type: none;
+        }
+
+        nav {
+            width: 100%
+        }
+
+        body {
+            margin: 0
+        }
+
+        .container {
+            display: grid;
+            height: 800px;
+            border: 1px solid rgb(255, 255, 255);
+            grid-template-columns: 1fr 5fr 1fr;
+            grid-template-rows: 1fr 8fr 1fr;
+        }
+
+        .container>div {
+            padding: 10px;
+        }
+
+        #messages {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        #messanger {
+            display: flex;
+            justify-content: center;
+        }
+
+        input.messanger {
+            width: 85%;
+            border: none;
+            height: 50px;
+            font-size: 25px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        input.inputer {
+            width: 300px;
+            border: none;
+            height: 50px;
+            font-size: 25px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .popup {
+            background-color: rgb(227, 227, 227);
+            position: fixed;
+            height: 25%;
+            width: 30%;
+            margin-top: 37.5%;
+            margin-left: 35%;
+            border: 5px solid black;
+            bottom: 37.5%;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #popup2 {
+            height: 45%;
+            margin-top: 32.5%;
+        }
+
+        .closebutton {
+            background-color: red;
+            height: 20px;
+            width: 20px;
+            border-radius: 2px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+        integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <center>
+        <div id="loginpage">
+            <h1>Login / Register</h1>
+            <div class="card">
+                <h2>Username</h2>
+                <input class="inputer" id="username">
+                <h2>Password</h2>
+                <input class="inputer" id="password">
+                <div style="display:flex; justify-content: space-evenly; margin-top: 20px;">
+                    <button onclick="login()">Login</button>
+                    <button onclick="register()">Register</button>
+                </div>
+            </div>
+        </div>
+        <div id="popup" class="popup">
+            <button onclick="close()" class="closebutton">x</button>
+            <h1>Join Room</h1>
+            <input id="jroom" class="inputlike" placeholder="joinerCode here..." style="width: 70%">
+            <button onclick="join()">join room</button>
+        </div>
+        <div id="popup2" class="popup">
+            <button onclick="close2()" class="closebutton">x</button>
+            <h1>Create Room</h1>
+            <input id="name" class="inputlike" placeholder="Name here..."
+                style="width: 70%; margin-top: 20px; margin-bottom: 20px;"><br>
+            <input id="code" class="inputlike" placeholder="JoinerCode here..."
+                style="width: 70%;  margin-bottom: 20px;"><br>
+            <button onclick="create()">create
+                room</button>
+        </div>
+        <div id="msgs" style="display:none">
+            <div class="container">
+                <nav
+                    style="float: left; background-color: rgb(180, 180, 255);grid-row:1; grid-column: 1/4; color:black">
+                    <h1 style="margin-left: 10px;" id="who">MeetCord</h1>
+                    <ul>
+                        <li style="position: relative; left: -20%;">
+                            <h4 id="logout">Logout</h4>
+                        </li>
+                        <li>
+                            <h4 id="cre8">Create Room</h4>
+                        </li>
+                    </ul>
+                </nav>
+                <div style="background-color: rgb(150, 150, 255); grid-row:2;grid-column: 1;" id="rooms">
+                    <h4>Rooms</h4>
+                    <select id="roomery" style="width:90%; margin-bottom: 10px;"></select><br>
+                    <h4 id="joinerCode"></h4>
+                    <button onclick="loadMessages()">Change room</button><br><br>
+                    <button onclick="leave()" style="background-color: red;">Leave room</button><br>
+                    <button style="border-radius: 60%; width:50px; margin-top:200%; font-size: 40px;"
+                        onclick="joinpopup()">+</button>
+                </div>
+                <div id="messages" style="background-color: aliceblue; grid-column: 2; grid-row:2; overflow-y: scroll;">
+
+                </div>
+                <div style="background-color: rgb(150, 150, 255); grid-column: 3; grid-row:2; overflow-y: scroll;"
+                    id="people">
+                    <h4>People</h4>
+                </div>
+
+                <div style="background-color: rgb(180, 180, 255); grid-column: 1/4; grid-row:3" id="messanger">
+                    <input id="message" class="messanger">
+                    <button onclick="submit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </center>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var Account
+        var Password
+        var Room
+
+        const socket = io();
+
+        socket.on("message", (message) => {
+            setTimeout(() => {
+                document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+            }, 0);
+
+            var { content, author, timestamp, room } = message
+            console.log(author, content, timestamp)
+            const div = document.createElement("div")
+            div.classList.add("card")
+
+            if (!content) {
+                div.style.display = "none"
+            }
+
+            if (room != document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value || !room) {
+                div.style.display = "none"
+            }
+
+            if (author == "GreeterBot") {
+                div.backgroundColor = "#20A9F8"
+            }
+
+            if (author == Account) {
+                div.style.marginRight == "100%"
+                div.style.backgroundColor = "#44F820"
+                author = "You"
+            }
+
+            const athr = document.createElement("i")
+            const msg = document.createElement("p")
+            athr.textContent = `${author} | ${timestamp}`
+            athr.style.fontSize = "10"
+            athr.style.opacity = "0.6"
+            msg.textContent = content
+            div.appendChild(athr)
+            div.appendChild(msg)
+            document.getElementById("messages").appendChild(div)
+            document.getElementById("message").value = ""
+        })
+
+        document.getElementById("logout").addEventListener("click", logout)
+        document.getElementById("cre8").addEventListener("click", createPopup)
+
+        async function submit() {
+            try {
+                const result = await axios.put("/", { content: document.getElementById("message").value, author: Account, timestamp: 123, room: document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value })
+            } catch (e) {
+                return balert(e.response.data.error + e.response.data.msg)
+            }
+        }
+
+        function close() {
+            document.getElementById("popup").style.display = "none"
+            console.log("close invoked")
+        }
+
+        async function leave(){
+            const url = `/${Account}/${Password}/${document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value}`
+            console.log(url)
+            const res = await axios.delete(url)
+            console.log(res)
+            main()
+            socket.emit("leave", {room: document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value,username: Account})
+            balert(`successfully left room ${res.data.room}`)
+        }
+
+        async function create() {
+            try {
+                if((document.getElementById("name").value).includes("'") || (document.getElementById("code").value).includes("'")){
+                    return balert("name or code CANNOT have 's in their names")
+                }
+
+                if((document.getElementById("name").value).includes('"') || (document.getElementById("code").value).includes('"')){
+                    return balert('name or code CANNOT have "s in their names')
+                }
+
+                await axios.post("/rooms", { name: document.getElementById("name").value, joinerCode: document.getElementById("code").value })
+                balert("Room with name " + document.getElementById("name").value + " created successfully")
+                await join(document.getElementById('code').value)
+            } catch (error) {
+                balert(error.response.data.error)
+                balert(error.response.data.msg)
+            } finally {
+                document.getElementById("popup2").style.display = "none"
+            }
+        } 
+
+        function balert(message) {
+            if (message != "undefined" && message != undefined) {
+                alert(message)
+            }
+        }
+
+        async function join(code = undefined) {
+            try {
+                var room
+                if (!code) { room = await axios.put(`/${Account}/${Password}`, { joinerCode: document.getElementById("jroom").value }) }
+                else { room = await axios.put(`/${Account}/${Password}`, { joinerCode: code }) }
+                console.log(room)
+                main()
+                balert(`successfully joined room with name ${room.response.data.name}`)
+                socket.emit("join", {room: room.response.data.name, username: Account})
+            } catch (error) {
+                console.log(error)
+                balert(error.response.data.error)
+                balert(error.response.data.msg)
+            } finally {
+                document.getElementById("popup").style.display = "none"
+            }
+        }
+
+        async function register() {
+            try {
+                const acc = await axios.post("/accounts", { username: document.getElementById("username").value, password: document.getElementById("password").value })
+                localStorage.setItem("loggedIn", document.getElementById("username").value)
+                Account = document.getElementById("username").value
+                Password = document.getElementById("password").value
+                console.log(Account)
+                main()
+                balert("Welcome to the meeting place " + Account)
+            } catch (error) {
+                console.log(error)
+                balert(error.response.data.msg)
+                balert(error.response.data.error)
+            }
+        }
+
+        function joinpopup() {
+            document.getElementById("popup").style.display = "block"
+        }
+
+        function createPopup() {
+            document.getElementById("popup2").style.display = "block"
+        }
+
+        async function loadMessages() {
+            try {
+                document.getElementById("people").innerHTML = "<h4>People</h4>"
+                document.getElementById("messages").innerHTML = ""
+                const result = await axios.get("/")
+
+                const messages = result.data.mesages
+                console.log(messages)
+
+                console.log(await axios.get("/rooms/" + document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value))
+                document.getElementById("joinerCode").textContent = "JoinerCode: " + (await axios.get("/rooms/" + document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value)).data.room.joinerCode
+
+                const accs = await axios.get("/accounts")
+                const rooms = await accs.data.accounts
+                rooms.forEach(element => {
+                    console.log(element)
+                    if (element.rooms.find(element2 => element2 == document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value)) {
+                        document.getElementById("people").innerHTML += `<h5>${element.username}</h5>`
+                    }
+                })
+                console.log(rooms)
+
+                messages.forEach(element => {
+                    var { content, author, timestamp, room } = element
+                    const div = document.createElement("div")
+                    div.classList.add("card")
+                    console.log(room, Room)
+
+                    if (room != document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value || !room) {
+                        div.style.display = "none"
+                    }
+
+                    if (!content) {
+                        div.style.display = "none"
+                    }
+
+                    if (author == "GreeterBot") {
+                        div.style.backgroundColor = "#20A9F8"
+                    }
+
+                    if (author == Account) {
+                        div.style.marginLeft == "100%"
+                        div.style.backgroundColor = "#44F820"
+                        author = "You"
+                    }
+
+                    const athr = document.createElement("i")
+                    const msg = document.createElement("p")
+                    athr.textContent = `${author} | ${timestamp}`
+                    athr.style.fontSize = "10"
+                    athr.style.opacity = "0.6"
+                    msg.textContent = content
+                    div.appendChild(athr)
+                    div.appendChild(msg)
+                    document.getElementById("messages").appendChild(div)
+                });
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        function logout() {
+            localStorage.clear()
+            main()
+        }
+
+        async function login() {
+            try {
+                const result = await axios.get(`/${document.getElementById("username").value}/${document.getElementById("password").value}`)
+                console.log(result.data)
+                const account = result.data.account.username
+                const password = result.data.account.password
+                localStorage.setItem("loggedIn", account)
+                Account = account
+                Password = password
+                main()
+                balert("Welcome back " + account)
+                console.log(document.getElementById("roomery").options)
+                setTimeout(() => Room = document.getElementById("roomery").options[document.getElementById("roomery").selectedIndex].value, 500)
+            } catch (error) {
+                console.log(error)
+                balert(error.response.data.msg)
+            }
+        }
+
+        async function main() {
+            document.getElementById("roomery").innerHTML = ""
+            console.log(localStorage.getItem("loggedIn") == null)
+
+            const acc = await axios.get(`/${Account}/${Password}`)
+            console.log(acc)
+            const rooms = acc.data.account.rooms
+
+            rooms.forEach(room => {
+                document.getElementById("roomery").innerHTML += `<option value='${room}'>${room}</option>`
+            });
+
+            if (localStorage.getItem("loggedIn") != null) {
+                Account = localStorage.getItem("loggedIn")
+                document.getElementById("loginpage").style.display = "none"
+                document.getElementById("msgs").style.display = "block"
+                document.getElementById("who").innerHTML = `${Account}'s MeetCord`
+                loadMessages()
+            } else {
+                document.getElementById("loginpage").style.display = "block"
+                document.getElementById("msgs").style.display = "none"
+            }
+        }
+
+        main()
+    </script>
+</body>
+
+</html>
